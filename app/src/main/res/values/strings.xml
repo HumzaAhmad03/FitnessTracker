@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Fitness Tracker</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="click_here_to_log_in">Click here to Log In</string>
+    <string name="dont_have_an_account_sign_up">Dont have an account? Sign Up</string>
+    <string name="logout">Logout</string>
+    <string name="chest_and_triceps">Chest and Triceps</string>
+    <string name="back_and_biceps">Back and Biceps</string>
+    <string name="legs">Legs</string>
+    <string name="_3_x_bench_press">3 x Bench Press</string>
+    <string name="_3_x_incline_bench">3 x Incline Bench</string>
+    <string name="_2_x_tricep_extensions">2 x Tricep Extensions</string>
+    <string name="_2_x_lat_pulldown">2 x Lat Pulldown</string>
+    <string name="_2_x_seated_row">2 x Seated Row</string>
+    <string name="_2_x_bicep_curl">2 x Bicep Curl</string>
+    <string name="_2_x_squats">2 x Squats</string>
+    <string name="_2_x_leg_extensions">2 x Leg Extensions</string>
+    <string name="_2_x_calf_raises">2 x Calf Raises</string>
+</resources>

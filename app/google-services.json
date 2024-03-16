@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "931945748725",
+    "project_id": "workout-tracker-6325c",
+    "storage_bucket": "workout-tracker-6325c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931945748725:android:2411f2f47a7aba88704dbc",
+        "android_client_info": {
+          "package_name": "com.example.fitnesstracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTu0jcUjHOYYjjNppOAyFPnW56nDQ-ao8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
