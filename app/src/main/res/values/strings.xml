@@ -19,4 +19,15 @@
     <string name="_2_x_squats">2 x Squats</string>
     <string name="_2_x_leg_extensions">2 x Leg Extensions</string>
     <string name="_2_x_calf_raises">2 x Calf Raises</string>
+    <string name="bench_press">Bench Press</string>
+    <string name="set">Set</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="weight_kg">Weight (KG)</string>
+    <string name="reps">Reps</string>
+    <string name="incline_bench_press">Incline Bench Press</string>
+    <string name="tricep_extension">Tricep Extension</string>
+    <string name="cancel_workout">Cancel Workout</string>
+    <string name="save_workout">Save Workout</string>
 </resources>
