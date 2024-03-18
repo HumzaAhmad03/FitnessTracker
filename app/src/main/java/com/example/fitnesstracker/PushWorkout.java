@@ -6,15 +6,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PushWorkout extends AppCompatActivity {
     EditText benchW1, benchW2, benchW3, benchR1, benchR2, benchR3;
     EditText inclineW1, inclineW2, inclineW3, inclineR1, inclineR2, inclineR3;
     EditText tricepW1, tricepW2, tricepW3, tricepR1, tricepR2, tricepR3;
     Button save_workout, cancel_workout;
+    FirebaseAuth auth;
+    FirebaseUser user;
+
+    TextView workoutType, exercise1, exercise2, exercise3;
 
 //    TextInputEditText BenchPress_Set1_Weight, BenchPress_Set2_Weight, BenchPress_Set3_Weight, BenchPress_Set1_Reps, BenchPress_Set2_Reps, BenchPress_Set3_Reps;
 //    TextInputEditText InclineBenchPress_Set1_Weight, InclineBenchPress_Set2_Weight, InclineBenchPress_Set3_Weight, InclineBenchPress_Set1_Reps, InclineBenchPress_Set2_Reps, InclineBenchPress_Set3_Reps;
@@ -24,8 +31,18 @@ public class PushWorkout extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push_workout);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
         save_workout = findViewById(R.id.save_workout_btn);
         cancel_workout = findViewById(R.id.cancel_workout_btn);
+
+        workoutType = findViewById(R.id.push_workout_title);
+
+        exercise1 = findViewById(R.id.push_workout_1);
+        exercise2 = findViewById(R.id.push_workout_2);
+        exercise3 = findViewById(R.id.push_workout_3);
 
         benchW1 = findViewById(R.id.BenchPress_Set1_Weight);
         benchW2 = findViewById(R.id.BenchPress_Set2_Weight);

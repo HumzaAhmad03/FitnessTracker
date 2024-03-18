@@ -11,7 +11,7 @@
 
 
     <TextView
-        android:id="@+id/workout_title"
+        android:id="@+id/push_workout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/chest_and_triceps"
@@ -20,11 +20,11 @@
         android:paddingBottom="15dp"/>
 
     <TextView
-        android:id="@+id/workout_1"
+        android:id="@+id/push_workout_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bench_press"
-        android:layout_below="@+id/workout_title"
+        android:layout_below="@+id/push_workout_title"
         android:layout_alignParentStart="true"
         android:textStyle="bold"
         android:textColor="@color/primary"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set"
-        android:layout_below="@+id/workout_1"
+        android:layout_below="@+id/push_workout_1"
         android:paddingEnd="50dp"/>
 
     <LinearLayout
@@ -75,7 +75,7 @@
 
     <TextView
         android:id="@+id/benchWeight"
-        android:layout_below="@+id/workout_1"
+        android:layout_below="@+id/push_workout_1"
         android:layout_toEndOf="@+id/benchSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
 
     <TextView
         android:id="@+id/benchReps"
-        android:layout_below="@+id/workout_1"
+        android:layout_below="@+id/push_workout_1"
         android:layout_toEndOf="@+id/benchWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/workout_2"
+        android:id="@+id/push_workout_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/incline_bench_press"
@@ -195,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set"
-        android:layout_below="@+id/workout_2"
+        android:layout_below="@+id/push_workout_2"
         android:paddingEnd="50dp"/>
 
     <LinearLayout
@@ -235,7 +235,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/inclineBenchWeight"
-        android:layout_below="@+id/workout_2"
+        android:layout_below="@+id/push_workout_2"
         android:layout_toEndOf="@+id/inclineBenchSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -289,7 +289,7 @@
 
     <TextView
         android:id="@+id/inclineBenchReps"
-        android:layout_below="@+id/workout_2"
+        android:layout_below="@+id/push_workout_2"
         android:layout_toEndOf="@+id/benchWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/workout_3"
+        android:id="@+id/push_workout_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tricep_extension"
@@ -355,7 +355,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set"
-        android:layout_below="@+id/workout_3"
+        android:layout_below="@+id/push_workout_3"
         android:paddingEnd="50dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -395,7 +395,7 @@
 
     <TextView
         android:id="@+id/tricepExtensionWeight"
-        android:layout_below="@+id/workout_3"
+        android:layout_below="@+id/push_workout_3"
         android:layout_toEndOf="@+id/inclineBenchSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -449,7 +449,7 @@
 
     <TextView
         android:id="@+id/tricepExtensionReps"
-        android:layout_below="@+id/workout_3"
+        android:layout_below="@+id/push_workout_3"
         android:layout_toEndOf="@+id/benchWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
