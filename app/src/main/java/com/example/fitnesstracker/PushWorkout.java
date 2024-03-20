@@ -25,16 +25,15 @@ import java.util.List;
 
 public class PushWorkout extends AppCompatActivity {
     EditText benchW1, benchW2, benchW3, benchR1, benchR2, benchR3;
-    //int maxWeightBench = 0, maxWeightIncline = 0, maxWeightTricep = 0;
-    //int maxWeightBenchPos = 0, maxWeightInclinePos = 0, maxWeightTricepPos = 0;
-    //int benchPB, inclinePB, tricepPB;
-    //int benchPBRep, inclinePBRep, tricepPBRep;
+//    int maxWeightBench = 0, maxWeightIncline = 0, maxWeightTricep = 0;
+//    int maxWeightBenchPos = 0, maxWeightInclinePos = 0, maxWeightTricepPos = 0;
+//    int benchPB, inclinePB, tricepPB;
+//    int benchPBRep, inclinePBRep, tricepPBRep;
     EditText inclineW1, inclineW2, inclineW3, inclineR1, inclineR2, inclineR3;
     EditText tricepW1, tricepW2, tricepW3, tricepR1, tricepR2, tricepR3;
     Button save_workout, cancel_workout;
     FirebaseAuth auth;
     FirebaseUser user;
-    //int uniqueWorkoutID;
     DatabaseReference databaseUsers;
     TextView workoutType, exercise1, exercise2, exercise3;
 
@@ -138,14 +137,17 @@ public class PushWorkout extends AppCompatActivity {
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to save this workout?");
+
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(PushWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
-                InsertData();
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                finish();
+                if (areFieldsEmpty()){
+                    Toast.makeText(PushWorkout.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(PushWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
+                    InsertData();
+                }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -175,6 +177,16 @@ public class PushWorkout extends AppCompatActivity {
         builder.create().show();
     }
     private void InsertData() {
+//        String benchPBWeight = String.valueOf(benchPB);
+//        String benchPBReps = String.valueOf(benchPBRep);
+//        String inclinePBWeight = String.valueOf(inclinePB);
+//        String inclinePBReps = String.valueOf(inclinePBRep);
+//        String tricepPBWeight = String.valueOf(tricepPB);
+//        String tricepPBReps = String.valueOf(tricepPBRep);
+//        String id = databaseUsers.push().getKey();
+//
+//        PushPB pushPB = new PushPB(benchPBWeight,benchPBReps,inclinePBWeight,inclinePBReps,tricepPBWeight,tricepPBReps);
+//        databaseUsers.child("userPB").child(id).setValue(pushPB);
 //        String id = databaseUsers.push().getKey();
 //        String set1Weight = benchW1.getText().toString();
 //        String set1Reps = benchR1.getText().toString();
@@ -222,6 +234,7 @@ public class PushWorkout extends AppCompatActivity {
             Workout workout = new Workout(workoutTypeText, exercises);
             // Push workout data to Firebase
             databaseUsers.child("users").child(user.getUid()).child("workouts").push().setValue(workout);
+            ;
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -271,4 +284,16 @@ public class PushWorkout extends AppCompatActivity {
 //            Toast.makeText(this, "Failed to save workout: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 //        }
 //    }
+    private boolean areFieldsEmpty() {
+    // Check if any of the EditText fields are empty
+    return isEmpty(benchW1) || isEmpty(benchW2) || isEmpty(benchW3) ||
+            isEmpty(benchR1) || isEmpty(benchR2) || isEmpty(benchR3) ||
+            isEmpty(inclineW1) || isEmpty(inclineW2) || isEmpty(inclineW3) ||
+            isEmpty(inclineR1) || isEmpty(inclineR2) || isEmpty(inclineR3) ||
+            isEmpty(tricepW1) || isEmpty(tricepW2) || isEmpty(tricepW3) ||
+            isEmpty(tricepR1) || isEmpty(tricepR2) || isEmpty(tricepR3);
+    }
+    private boolean isEmpty(EditText field){
+        return field.getText().toString().isEmpty();
+    }
 }
