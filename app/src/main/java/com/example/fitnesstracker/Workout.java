@@ -12,12 +12,9 @@ public class Workout {
     @PropertyName("exercises")
     private Map<String, Exercise> exercises;
 
-    public Workout(String workoutTypeText, List<Exercise> exercises) {
-        this.exercises = new HashMap<>();
+    public Workout(String workoutTypeText, HashMap<String, Exercise> exercises) {
+        this.exercises = exercises;
         this.workoutType = workoutTypeText;
-        for (int i = 0; i < exercises.size(); i++){
-            this.exercises.put(String.valueOf(i), exercises.get(i));
-        }
     }
 
     public Workout(String workoutType) {

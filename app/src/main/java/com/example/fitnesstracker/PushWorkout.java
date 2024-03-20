@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PushWorkout extends AppCompatActivity {
@@ -166,6 +167,9 @@ public class PushWorkout extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(PushWorkout.this, "Cancelling workout...", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -205,28 +209,28 @@ public class PushWorkout extends AppCompatActivity {
             String workoutTypeText = workoutType.getText().toString();
 
             // Create a list of exercises
-            List<Exercise> exercises = new ArrayList<>();
+            HashMap<String, Exercise> exercises = new HashMap<>();
 
             // Add exercise 1
             Exercise exercise1 = new Exercise(this.exercise1.getText().toString());
             exercise1.addSet("set1", new Set(Integer.parseInt(benchR1.getText().toString()), Integer.parseInt(benchW1.getText().toString())));
             exercise1.addSet("set2", new Set(Integer.parseInt(benchR2.getText().toString()), Integer.parseInt(benchW2.getText().toString())));
             exercise1.addSet("set3", new Set(Integer.parseInt(benchR3.getText().toString()), Integer.parseInt(benchW3.getText().toString())));
-            exercises.add(exercise1);
+            exercises.put(exercise1.getName(),exercise1);
 
             // Add exercise 2
             Exercise exercise2 = new Exercise(this.exercise2.getText().toString());
             exercise2.addSet("set1", new Set(Integer.parseInt(inclineR1.getText().toString()), Integer.parseInt(inclineW1.getText().toString())));
             exercise2.addSet("set2", new Set(Integer.parseInt(inclineR2.getText().toString()), Integer.parseInt(inclineW2.getText().toString())));
             exercise2.addSet("set3", new Set(Integer.parseInt(inclineR3.getText().toString()), Integer.parseInt(inclineW3.getText().toString())));
-            exercises.add(exercise2);
+            exercises.put(exercise2.getName(), exercise2);
 
             // Add exercise 3
             Exercise exercise3 = new Exercise(this.exercise3.getText().toString());
             exercise3.addSet("set1", new Set(Integer.parseInt(tricepR1.getText().toString()), Integer.parseInt(tricepW1.getText().toString())));
             exercise3.addSet("set2", new Set(Integer.parseInt(tricepR2.getText().toString()), Integer.parseInt(tricepW2.getText().toString())));
             exercise3.addSet("set3", new Set(Integer.parseInt(tricepR3.getText().toString()), Integer.parseInt(tricepW3.getText().toString())));
-            exercises.add(exercise3);
+            exercises.put(exercise3.getName(),exercise3);
 
 
 
