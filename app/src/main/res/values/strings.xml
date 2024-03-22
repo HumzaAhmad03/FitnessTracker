@@ -12,13 +12,13 @@
     <string name="legs">Legs</string>
     <string name="_3_x_bench_press">3 x Bench Press</string>
     <string name="_3_x_incline_bench">3 x Incline Bench</string>
-    <string name="_2_x_tricep_extensions">2 x Tricep Extensions</string>
-    <string name="_2_x_lat_pulldown">2 x Lat Pulldown</string>
-    <string name="_2_x_seated_row">2 x Seated Row</string>
-    <string name="_2_x_bicep_curl">2 x Bicep Curl</string>
-    <string name="_2_x_squats">2 x Squats</string>
-    <string name="_2_x_leg_extensions">2 x Leg Extensions</string>
-    <string name="_2_x_calf_raises">2 x Calf Raises</string>
+    <string name="_3_x_tricep_extensions">3 x Tricep Extensions</string>
+    <string name="_3_x_lat_pulldown">3 x Lat Pulldown</string>
+    <string name="_3_x_seated_row">3 x Seated Row</string>
+    <string name="_3_x_bicep_curl">3 x Bicep Curl</string>
+    <string name="_3_x_squats">3 x Squats</string>
+    <string name="_3_x_leg_extensions">3 x Leg Extensions</string>
+    <string name="_3_x_calf_raises">3 x Calf Raises</string>
     <string name="bench_press">Bench Press</string>
     <string name="set">Set</string>
     <string name="_1">1</string>
@@ -30,4 +30,12 @@
     <string name="tricep_extension">Tricep Extension</string>
     <string name="cancel_workout">Cancel Workout</string>
     <string name="save_workout">Save Workout</string>
+    <string name="back_and_biceps_title">Back and Biceps</string>
+    <string name="lat_pulldown">Lat Pulldown</string>
+    <string name="seated_row">Seated Row</string>
+    <string name="bicep_curl">Bicep Curl</string>
+    <string name="select_workout_type">Select Workout Type:</string>
+    <string name="squats">Squats</string>
+    <string name="leg_extensions">Leg Extensions</string>
+    <string name="calf_raises">Calf Raises</string>
 </resources>

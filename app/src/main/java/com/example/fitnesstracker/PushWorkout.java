@@ -17,9 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 import java.util.HashMap;
-
 
 public class PushWorkout extends AppCompatActivity {
     EditText benchW1, benchW2, benchW3, benchR1, benchR2, benchR3;
@@ -30,11 +28,8 @@ public class PushWorkout extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference databaseUsers;
     TextView workoutType, exercise1, exercise2, exercise3;
-//    int maxWeightBench = 0, maxWeightIncline = 0, maxWeightTricep = 0;
-//    int maxWeightBenchPos = 0, maxWeightInclinePos = 0, maxWeightTricepPos = 0;
-//    int benchPB, inclinePB, tricepPB;
-//    int benchPBRep, inclinePBRep, tricepPBRep;
-
+    int benchPB, inclinePB, tricepPB;
+    int benchPBRep, inclinePBRep, tricepPBRep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,6 @@ public class PushWorkout extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
 
         save_workout = findViewById(R.id.save_workout_btn);
         cancel_workout = findViewById(R.id.cancel_workout_btn);
@@ -102,42 +96,49 @@ public class PushWorkout extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (areFieldsEmpty()){
                     Toast.makeText(PushWorkout.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+                    System.out.println("emptyyy");
                 }
                 else {
-//                    int[] benchWeight = new int[]{Integer.parseInt(benchW1.toString()),Integer.parseInt(benchW2.toString()), Integer.parseInt(benchW3.toString())};
-//                    int[] benchReps = new int[]{Integer.parseInt(benchR1.toString()),Integer.parseInt(benchR2.toString()), Integer.parseInt(benchR3.toString())};
-//                    for (int i = 0; i < benchWeight.length; i++){
-//                        if (benchWeight[i] > maxWeightBench){
-//                            maxWeightBench = benchWeight[i];
-//                            maxWeightBenchPos = i;
-//                        }
-//                    }
-//                    benchPB = maxWeightBench;
-//                    benchPBRep = benchReps[maxWeightBenchPos];
-//
-//                    int[] inclineWeight = new int[]{Integer.parseInt(inclineW1.toString()),Integer.parseInt(inclineW2.toString()), Integer.parseInt(inclineW3.toString())};
-//                    int[] inclineReps = new int[]{Integer.parseInt(inclineR1.toString()),Integer.parseInt(inclineR2.toString()), Integer.parseInt(inclineR3.toString())};
-//                    for (int i = 0; i < inclineWeight.length; i++){
-//                        if (inclineWeight[i] > maxWeightIncline){
-//                            maxWeightIncline = inclineWeight[i];
-//                            maxWeightInclinePos = i;
-//                        }
-//                    }
-//                    inclinePB = maxWeightIncline;
-//                    inclinePBRep = inclineReps[maxWeightInclinePos];
-//
-//                    int[] tricepWeight = new int[]{Integer.parseInt(tricepW1.toString()),Integer.parseInt(tricepW2.toString()), Integer.parseInt(tricepW3.toString())};
-//                    int[] tricepReps = new int[]{Integer.parseInt(tricepR1.toString()),Integer.parseInt(tricepR2.toString()), Integer.parseInt(tricepR3.toString())};
-//                    for (int i = 0; i < tricepWeight.length; i++){
-//                        if (tricepWeight[i] > maxWeightTricep){
-//                            maxWeightTricep = tricepWeight[i];
-//                            maxWeightTricepPos = i;
-//                        }
-//                    }
-//                    tricepPB = maxWeightTricep;
-//                    tricepPBRep = tricepReps[maxWeightTricepPos];
+                    System.out.println("full");
+// Parse EditText values and find maximum weight for bench press
+                    int maxWeightBench = findMaxWeight(new EditText[]{benchW1, benchW2, benchW3});
+                    int[] benchReps = new int[]{
+                            Integer.parseInt(benchR1.getText().toString()),
+                            Integer.parseInt(benchR2.getText().toString()),
+                            Integer.parseInt(benchR3.getText().toString())
+                    };
+                    int maxWeightBenchPos = findMaxWeightPosition(new EditText[]{benchW1, benchW2, benchW3});
+                    benchPB = maxWeightBench;
+                    benchPBRep = benchReps[maxWeightBenchPos];
 
+                    int maxWeightIncline = findMaxWeight(new EditText[]{inclineW1, inclineW2, inclineW3});
+                    int[] inclineReps = new int[]{
+                            Integer.parseInt(inclineR1.getText().toString()),
+                            Integer.parseInt(inclineR2.getText().toString()),
+                            Integer.parseInt(inclineR3.getText().toString())
+                    };
+                    int maxWeightInclinePos = findMaxWeightPosition(new EditText[]{inclineW1, inclineW2, inclineW3});
+                    inclinePB = maxWeightIncline;
+                    inclinePBRep = inclineReps[maxWeightInclinePos];
+
+                    int maxWeightTricep = findMaxWeight(new EditText[]{tricepW1, tricepW2, tricepW3});
+                    int[] tricepReps = new int[]{
+                            Integer.parseInt(tricepR1.getText().toString()),
+                            Integer.parseInt(tricepR2.getText().toString()),
+                            Integer.parseInt(tricepR3.getText().toString())
+                    };
+                    int maxWeightTricepPos = findMaxWeightPosition(new EditText[]{tricepW1, tricepW2, tricepW3});
+                    tricepPB = maxWeightTricep;
+                    tricepPBRep = tricepReps[maxWeightTricepPos];
+                    //Toast.makeText(PushWorkout.this, "max bench"+benchPB, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PushWorkout.this, "max bench reps"+benchPBRep, Toast.LENGTH_SHORT).show();
                     Toast.makeText(PushWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
+                    System.out.println("Bench best set weight = " + benchPB);
+                    System.out.println("Bench best set reps = " + benchPBRep);
+                    System.out.println("Incline best set weight = " + inclinePB);
+                    System.out.println("Incline best set reps = " + inclinePBRep);
+                    System.out.println("Tricep best set weight = " + tricepPB);
+                    System.out.println("Tricep best set reps = " + tricepPBRep);
                     InsertData();
                 }
             }
@@ -172,31 +173,6 @@ public class PushWorkout extends AppCompatActivity {
         builder.create().show();
     }
     private void InsertData() {
-//        String benchPBWeight = String.valueOf(benchPB);
-//        String benchPBReps = String.valueOf(benchPBRep);
-//        String inclinePBWeight = String.valueOf(inclinePB);
-//        String inclinePBReps = String.valueOf(inclinePBRep);
-//        String tricepPBWeight = String.valueOf(tricepPB);
-//        String tricepPBReps = String.valueOf(tricepPBRep);
-//        String id = databaseUsers.push().getKey();
-//
-//        PushPB pushPB = new PushPB(benchPBWeight,benchPBReps,inclinePBWeight,inclinePBReps,tricepPBWeight,tricepPBReps);
-//        databaseUsers.child("userPB").child(id).setValue(pushPB);
-
-//        String id = databaseUsers.push().getKey();
-//        String set1Weight = benchW1.getText().toString();
-//        String set1Reps = benchR1.getText().toString();
-//        User user = new User(set1Weight, set1Reps);
-//
-//        databaseUsers.child("users").child(id).setValue(user)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if(task.isSuccessful()){
-//                            Toast.makeText(PushWorkout.this, "user details entered", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
         try {
             String workoutTypeText = workoutType.getText().toString();
 
@@ -224,13 +200,10 @@ public class PushWorkout extends AppCompatActivity {
             exercise3.addSet("set3", new Set(Integer.parseInt(tricepR3.getText().toString()), Integer.parseInt(tricepW3.getText().toString())));
             exercises.put(exercise3.getName(),exercise3);
 
-
-
             // Create a new Workout object with the list of exercises
             Workout workout = new Workout(workoutTypeText, exercises);
             // Push workout data to Firebase
             databaseUsers.child("users").child(user.getUid()).child("workouts").push().setValue(workout);
-            ;
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -252,4 +225,126 @@ public class PushWorkout extends AppCompatActivity {
     private boolean isEmpty(EditText field){
         return field.getText().toString().isEmpty();
     }
+
+    private int findMaxWeight(EditText[] editTexts) {
+        int maxWeight = Integer.MIN_VALUE;
+        for (EditText editText : editTexts) {
+            int weight = Integer.parseInt(editText.getText().toString());
+            if (weight > maxWeight) {
+                maxWeight = weight;
+            }
+        }
+        return maxWeight;
+    }
+
+    private int findMaxWeightPosition(EditText[] editTexts) {
+        int maxWeight = Integer.MIN_VALUE;
+        int maxWeightPos = -1;
+        for (int i = 0; i < editTexts.length; i++) {
+            int weight = Integer.parseInt(editTexts[i].getText().toString());
+            if (weight > maxWeight) {
+                maxWeight = weight;
+                maxWeightPos = i;
+            }
+        }
+        return maxWeightPos;
+    }
 }
+
+//    int maxWeightBench = 0, maxWeightIncline = 0, maxWeightTricep = 0;
+//    int maxWeightBenchPos = 0, maxWeightInclinePos = 0, maxWeightTricepPos = 0;
+//    int benchPB, inclinePB, tricepPB;
+//    int benchPBRep, inclinePBRep, tricepPBRep;
+
+// Parse EditText values and find maximum weight for bench press
+//                    int maxWeightBench = findMaxWeight(new EditText[]{benchW1, benchW2, benchW3});
+//                    int[] benchReps = new int[]{
+//                            Integer.parseInt(benchR1.getText().toString()),
+//                            Integer.parseInt(benchR2.getText().toString()),
+//                            Integer.parseInt(benchR3.getText().toString())
+//                    };
+//                    int maxWeightBenchPos = findMaxWeightPosition(new EditText[]{benchW1, benchW2, benchW3});
+//                    benchPB = maxWeightBench;
+//                    benchPBRep = benchReps[maxWeightBenchPos];
+
+//    private int findMaxWeight(EditText[] editTexts) {
+//        int maxWeight = Integer.MIN_VALUE;
+//        for (EditText editText : editTexts) {
+//            int weight = Integer.parseInt(editText.getText().toString());
+//            if (weight > maxWeight) {
+//                maxWeight = weight;
+//            }
+//        }
+//        return maxWeight;
+//    }
+//
+//    private int findMaxWeightPosition(EditText[] editTexts) {
+//        int maxWeight = Integer.MIN_VALUE;
+//        int maxWeightPos = -1;
+//        for (int i = 0; i < editTexts.length; i++) {
+//            int weight = Integer.parseInt(editTexts[i].getText().toString());
+//            if (weight > maxWeight) {
+//                maxWeight = weight;
+//                maxWeightPos = i;
+//            }
+//        }
+//        return maxWeightPos;
+//    }
+//        String benchPBWeight = String.valueOf(benchPB);
+//        String benchPBReps = String.valueOf(benchPBRep);
+//        String inclinePBWeight = String.valueOf(inclinePB);
+//        String inclinePBReps = String.valueOf(inclinePBRep);
+//        String tricepPBWeight = String.valueOf(tricepPB);
+//        String tricepPBReps = String.valueOf(tricepPBRep);
+//        String id = databaseUsers.push().getKey();
+//
+//        PushPB pushPB = new PushPB(benchPBWeight,benchPBReps,inclinePBWeight,inclinePBReps,tricepPBWeight,tricepPBReps);
+//        databaseUsers.child("userPB").child(id).setValue(pushPB);
+
+//        String id = databaseUsers.push().getKey();
+//        String set1Weight = benchW1.getText().toString();
+//        String set1Reps = benchR1.getText().toString();
+//        User user = new User(set1Weight, set1Reps);
+//
+//        databaseUsers.child("users").child(id).setValue(user)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if(task.isSuccessful()){
+//                            Toast.makeText(PushWorkout.this, "user details entered", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+
+//                    int[] benchWeight = new int[]{Integer.parseInt(benchW1.toString()),Integer.parseInt(benchW2.toString()), Integer.parseInt(benchW3.toString())};
+//                    int[] benchReps = new int[]{Integer.parseInt(benchR1.toString()),Integer.parseInt(benchR2.toString()), Integer.parseInt(benchR3.toString())};
+//                    for (int i = 0; i < benchWeight.length; i++){
+//                        if (benchWeight[i] > maxWeightBench){
+//                            maxWeightBench = benchWeight[i];
+//                            maxWeightBenchPos = i;
+//                        }
+//                    }
+//                    benchPB = maxWeightBench;
+//                    benchPBRep = benchReps[maxWeightBenchPos];
+//
+//                    int[] inclineWeight = new int[]{Integer.parseInt(inclineW1.toString()),Integer.parseInt(inclineW2.toString()), Integer.parseInt(inclineW3.toString())};
+//                    int[] inclineReps = new int[]{Integer.parseInt(inclineR1.toString()),Integer.parseInt(inclineR2.toString()), Integer.parseInt(inclineR3.toString())};
+//                    for (int i = 0; i < inclineWeight.length; i++){
+//                        if (inclineWeight[i] > maxWeightIncline){
+//                            maxWeightIncline = inclineWeight[i];
+//                            maxWeightInclinePos = i;
+//                        }
+//                    }
+//                    inclinePB = maxWeightIncline;
+//                    inclinePBRep = inclineReps[maxWeightInclinePos];
+//
+//                    int[] tricepWeight = new int[]{Integer.parseInt(tricepW1.toString()),Integer.parseInt(tricepW2.toString()), Integer.parseInt(tricepW3.toString())};
+//                    int[] tricepReps = new int[]{Integer.parseInt(tricepR1.toString()),Integer.parseInt(tricepR2.toString()), Integer.parseInt(tricepR3.toString())};
+//                    for (int i = 0; i < tricepWeight.length; i++){
+//                        if (tricepWeight[i] > maxWeightTricep){
+//                            maxWeightTricep = tricepWeight[i];
+//                            maxWeightTricepPos = i;
+//                        }
+//                    }
+//                    tricepPB = maxWeightTricep;
+//                    tricepPBRep = tricepReps[maxWeightTricepPos];

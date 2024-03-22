@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PushWorkout"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingLeft="75dp"
     android:paddingTop="15dp">
 
 
@@ -15,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/chest_and_triceps"
+        android:layout_centerHorizontal="true"
         android:textSize="25sp"
         android:textStyle="bold"
         android:paddingBottom="15dp"/>
@@ -97,7 +97,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -109,7 +109,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -121,7 +121,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -150,7 +150,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -162,7 +162,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -174,7 +174,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -258,7 +258,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -270,7 +270,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -282,7 +282,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -310,7 +310,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -322,7 +322,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -334,7 +334,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -418,7 +418,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -430,7 +430,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -442,7 +442,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -470,7 +470,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -482,7 +482,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
         <EditText
@@ -494,7 +494,7 @@
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:background="@drawable/input_field_border"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:gravity="center"
             />
     </LinearLayout>
@@ -503,9 +503,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_below="@+id/tricepExtensionDetailsSection"
-        android:layout_marginTop="45dp">
+        android:layout_marginTop="45dp"
+        android:layout_centerInParent="true">
 
         <Button
             android:id="@+id/cancel_workout_btn"
@@ -515,10 +516,10 @@
             android:background="@drawable/cancel_workout_border"
             android:textStyle="bold"
             android:textSize="15sp"
+            android:layout_marginBottom="25dp"
             app:backgroundTint="@null"/>
         <Button
             android:id="@+id/save_workout_btn"
-            android:layout_marginLeft="35dp"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="@string/save_workout"

@@ -6,27 +6,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/user_details"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logout" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="50dp"/>
+    tools:context=".MainActivity"
+    android:layout_margin="20dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/user_details"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:text="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:background="@drawable/input_field_border"
+            app:backgroundTint="@null"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"/>
+    <TextView
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/select_workout_type"
+        android:paddingStart="15dp"
+        android:textColor="@color/primary"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
@@ -34,8 +55,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:text="@string/chest_and_triceps"
+            android:textColor="@color/primary"
+            android:background="@drawable/input_field_border"
+            app:backgroundTint="@null"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -56,12 +80,12 @@
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_tricep_extensions"/>
+                android:text="@string/_3_x_tricep_extensions"/>
         </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="15dp">
@@ -70,8 +94,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:text="@string/back_and_biceps"
+            android:textColor="@color/primary"
+            android:background="@drawable/input_field_border"
+            app:backgroundTint="@null"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
@@ -84,23 +111,23 @@
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_lat_pulldown"/>
+                android:text="@string/_3_x_lat_pulldown"/>
             <TextView
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_seated_row"/>
+                android:text="@string/_3_x_seated_row"/>
             <TextView
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_bicep_curl"/>
+                android:text="@string/_3_x_bicep_curl"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="15dp">
@@ -109,8 +136,11 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:text="@string/legs"
+            android:textColor="@color/primary"
+            android:background="@drawable/input_field_border"
+            app:backgroundTint="@null"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -121,21 +151,34 @@
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_squats"/>
+                android:text="@string/_3_x_squats"/>
 
             <TextView
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_leg_extensions" />
+                android:text="@string/_3_x_leg_extensions" />
             <TextView
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_2_x_calf_raises"/>
+                android:text="@string/_3_x_calf_raises"/>
         </LinearLayout>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workoutHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
 
 </LinearLayout>
+
 
