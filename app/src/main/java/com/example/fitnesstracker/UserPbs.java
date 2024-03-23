@@ -66,6 +66,96 @@ public class UserPbs extends AppCompatActivity {
         user = auth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("workouts");
 
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                HashMap<String, Integer> personalBests = new HashMap<>();
+//                HashMap<String, Integer> personalBestReps = new HashMap<>();
+//
+//                // Retrieve all workouts
+//                for (DataSnapshot workoutSnapshot : snapshot.getChildren()) {
+//                    // Iterate through exercises in each workout
+//                    for (DataSnapshot exerciseSnapshot : workoutSnapshot.child("exercises").getChildren()) {
+//                        String exerciseName = exerciseSnapshot.child("name").getValue(String.class);
+//                        if (exerciseName != null) {
+//                            // Iterate through all sets of the exercise
+//                            for (DataSnapshot setSnapshot : exerciseSnapshot.child("sets").getChildren()) {
+//                                // Retrieve set weight and reps
+//                                Integer setWeight = setSnapshot.child("weight").getValue(Integer.class);
+//                                Integer setReps = setSnapshot.child("reps").getValue(Integer.class);
+//                                if (setWeight != null && setReps != null) {
+//                                    // Check if a personal best exists for this exercise
+//                                    if (personalBests.containsKey(exerciseName)) {
+//                                        // Update personal best if necessary
+//                                        int currentBest = personalBests.get(exerciseName);
+//                                        if (setWeight > currentBest) {
+//                                            personalBests.put(exerciseName, setWeight);
+//                                            personalBestReps.put(exerciseName, setReps);
+//                                        }
+//                                    } else {
+//                                        // First personal best for this exercise
+//                                        personalBests.put(exerciseName, setWeight);
+//                                        personalBestReps.put(exerciseName, setReps);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                if (personalBests.containsKey("Bench Press")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    benchPb.setText(String.format("%s %s ", personalBests.get("Bench Press"), weightTemplate));
+//                    benchPbReps.setText(String.valueOf(personalBestReps.get("Bench Press")));
+//                }
+//                if (personalBests.containsKey("Incline Bench Press")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    inclinePb.setText(String.format("%s %s ", personalBests.get("Incline Bench Press"), weightTemplate));
+//                    inclinePbReps.setText(String.valueOf(personalBestReps.get("Incline Bench Press")));
+//                }
+//                if (personalBests.containsKey("Tricep Extension")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    tricepPb.setText(String.format("%s %s ", personalBests.get("Tricep Extension"), weightTemplate));
+//                    tricepPbReps.setText(String.valueOf(personalBestReps.get("Tricep Extension")));
+//                }
+//                if (personalBests.containsKey("Lat Pulldown")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    latPb.setText(String.format("%s %s ", personalBests.get("Lat Pulldown"), weightTemplate));
+//                    latPbReps.setText(String.valueOf(personalBestReps.get("Lat Pulldown")));
+//                }
+//                if (personalBests.containsKey("Seated Row")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    rowPb.setText(String.format("%s %s ", personalBests.get("Seated Row"), weightTemplate));
+//                    rowPbReps.setText(String.valueOf(personalBestReps.get("Seated Row")));
+//                }
+//                if (personalBests.containsKey("Bicep Curl")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    bicepPb.setText(String.format("%s %s ", personalBests.get("Bicep Curl"), weightTemplate));
+//                    bicepPbReps.setText(String.valueOf(personalBestReps.get("Bicep Curl")));
+//                }
+//                if (personalBests.containsKey("Squats")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    squatPb.setText(String.format("%s %s ", personalBests.get("Squats"), weightTemplate));
+//                    squatPbReps.setText(String.valueOf(personalBestReps.get("Squats")));
+//                }
+//                if (personalBests.containsKey("Leg Extensions")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    extensionPb.setText(String.format("%s %s ", personalBests.get("Leg Extensions"), weightTemplate));
+//                    extensionPbReps.setText(String.valueOf(personalBestReps.get("Leg Extensions")));
+//                }
+//                if (personalBests.containsKey("Calf Raises")) {
+//                    String weightTemplate = getString(R.string.weight_and_reps_template);
+//                    calfPb.setText(String.format("%s %s ", personalBests.get("Calf Raises"), weightTemplate));
+//                    calfPbReps.setText(String.valueOf(personalBestReps.get("Calf Raises")));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Handle database error
+//            }
+//        });
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,7 +193,101 @@ public class UserPbs extends AppCompatActivity {
                     }
                 }
 
-                //looks at the first set
+                // Update EditText fields with personal bests
+                updateEditTextFields(personalBests, personalBestReps);
+
+                // Push personal bests to the database
+                pushPersonalBestsToDatabase(personalBests, personalBestReps);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle database error
+            }
+        });
+    }
+    private void updateEditTextFields(HashMap<String, Integer> personalBests, HashMap<String, Integer> personalBestReps) {
+        if (personalBests.containsKey("Bench Press")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            benchPb.setText(String.format("%s %s ", personalBests.get("Bench Press"), weightTemplate));
+            benchPbReps.setText(String.valueOf(personalBestReps.get("Bench Press")));
+        }
+        if (personalBests.containsKey("Incline Bench Press")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            inclinePb.setText(String.format("%s %s ", personalBests.get("Incline Bench Press"), weightTemplate));
+            inclinePbReps.setText(String.valueOf(personalBestReps.get("Incline Bench Press")));
+        }
+        if (personalBests.containsKey("Tricep Extension")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            tricepPb.setText(String.format("%s %s ", personalBests.get("Tricep Extension"), weightTemplate));
+            tricepPbReps.setText(String.valueOf(personalBestReps.get("Tricep Extension")));
+        }
+        if (personalBests.containsKey("Lat Pulldown")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            latPb.setText(String.format("%s %s ", personalBests.get("Lat Pulldown"), weightTemplate));
+            latPbReps.setText(String.valueOf(personalBestReps.get("Lat Pulldown")));
+        }
+        if (personalBests.containsKey("Seated Row")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            rowPb.setText(String.format("%s %s ", personalBests.get("Seated Row"), weightTemplate));
+            rowPbReps.setText(String.valueOf(personalBestReps.get("Seated Row")));
+        }
+        if (personalBests.containsKey("Bicep Curl")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            bicepPb.setText(String.format("%s %s ", personalBests.get("Bicep Curl"), weightTemplate));
+            bicepPbReps.setText(String.valueOf(personalBestReps.get("Bicep Curl")));
+        }
+        if (personalBests.containsKey("Squats")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            squatPb.setText(String.format("%s %s ", personalBests.get("Squats"), weightTemplate));
+            squatPbReps.setText(String.valueOf(personalBestReps.get("Squats")));
+        }
+        if (personalBests.containsKey("Leg Extensions")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            extensionPb.setText(String.format("%s %s ", personalBests.get("Leg Extensions"), weightTemplate));
+            extensionPbReps.setText(String.valueOf(personalBestReps.get("Leg Extensions")));
+        }
+        if (personalBests.containsKey("Calf Raises")) {
+            String weightTemplate = getString(R.string.weight_and_reps_template);
+            calfPb.setText(String.format("%s %s ", personalBests.get("Calf Raises"), weightTemplate));
+            calfPbReps.setText(String.valueOf(personalBestReps.get("Calf Raises")));
+        }
+    }
+
+    private void pushPersonalBestsToDatabase(HashMap<String, Integer> personalBests, HashMap<String, Integer> personalBestReps) {
+        DatabaseReference userPbRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("personal_bests");
+        for (String exercise : personalBests.keySet()) {
+            int newPb = personalBests.get(exercise);
+            int newPbReps = personalBestReps.get(exercise);
+            DatabaseReference exercisePbRef = userPbRef.child(exercise);
+            exercisePbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        // No existing personal best for this exercise, set it
+                        exercisePbRef.child("weight").setValue(newPb);
+                        exercisePbRef.child("reps").setValue(newPbReps);
+                    } else {
+                        // Update personal best only if the new one is greater
+                        int existingPb = dataSnapshot.child("weight").getValue(Integer.class);
+                        if (newPb > existingPb) {
+                            exercisePbRef.child("weight").setValue(newPb);
+                            exercisePbRef.child("reps").setValue(newPbReps);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle database error
+                }
+            });
+        }
+    }
+}
+
+
+//looks at the first set
 //                for (DataSnapshot workoutSnapshot : snapshot.getChildren()) {
 //                    // Iterate through exercises in each workout
 //                    for (DataSnapshot exerciseSnapshot : workoutSnapshot.child("exercises").getChildren()) {
@@ -131,7 +315,7 @@ public class UserPbs extends AppCompatActivity {
 //                    }
 //                }
 
-                // Update TextViews with personal bests
+// Update TextViews with personal bests
 //                if (personalBests.containsKey("Bench Press")) {
 //                    benchPb.setText(String.valueOf(personalBests.get("Bench Press")));
 //                    benchPbReps.setText(String.valueOf(personalBestReps.get("Bench Press")));
@@ -144,58 +328,6 @@ public class UserPbs extends AppCompatActivity {
 //                    tricepPb.setText(String.valueOf(personalBests.get("Tricep Extension")));
 //                    tricepPbReps.setText(String.valueOf(personalBestReps.get("Tricep Extension")));
 //                }
-                if (personalBests.containsKey("Bench Press")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    benchPb.setText(String.format("%s %s ", personalBests.get("Bench Press"), weightTemplate));
-                    benchPbReps.setText(String.valueOf(personalBestReps.get("Bench Press")));
-                }
-                if (personalBests.containsKey("Incline Bench Press")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    inclinePb.setText(String.format("%s %s ", personalBests.get("Incline Bench Press"), weightTemplate));
-                    inclinePbReps.setText(String.valueOf(personalBestReps.get("Incline Bench Press")));
-                }
-                if (personalBests.containsKey("Tricep Extension")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    tricepPb.setText(String.format("%s %s ", personalBests.get("Tricep Extension"), weightTemplate));
-                    tricepPbReps.setText(String.valueOf(personalBestReps.get("Tricep Extension")));
-                }
-                if (personalBests.containsKey("Lat Pulldown")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    latPb.setText(String.format("%s %s ", personalBests.get("Lat Pulldown"), weightTemplate));
-                    latPbReps.setText(String.valueOf(personalBestReps.get("Lat Pulldown")));
-                }
-                if (personalBests.containsKey("Seated Row")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    rowPb.setText(String.format("%s %s ", personalBests.get("Seated Row"), weightTemplate));
-                    rowPbReps.setText(String.valueOf(personalBestReps.get("Seated Row")));
-                }
-                if (personalBests.containsKey("Bicep Curl")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    bicepPb.setText(String.format("%s %s ", personalBests.get("Bicep Curl"), weightTemplate));
-                    bicepPbReps.setText(String.valueOf(personalBestReps.get("Bicep Curl")));
-                }
-                if (personalBests.containsKey("Squats")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    squatPb.setText(String.format("%s %s ", personalBests.get("Squats"), weightTemplate));
-                    squatPbReps.setText(String.valueOf(personalBestReps.get("Squats")));
-                }
-                if (personalBests.containsKey("Leg Extensions")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    extensionPb.setText(String.format("%s %s ", personalBests.get("Leg Extensions"), weightTemplate));
-                    extensionPbReps.setText(String.valueOf(personalBestReps.get("Leg Extensions")));
-                }
-                if (personalBests.containsKey("Calf Raises")) {
-                    String weightTemplate = getString(R.string.weight_and_reps_template);
-                    calfPb.setText(String.format("%s %s ", personalBests.get("Calf Raises"), weightTemplate));
-                    calfPbReps.setText(String.valueOf(personalBestReps.get("Calf Raises")));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
-            }
-        });
 
 //        databaseReference.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -244,5 +376,3 @@ public class UserPbs extends AppCompatActivity {
 //                // Handle database error
 //            }
 //        });
-    }
-}
