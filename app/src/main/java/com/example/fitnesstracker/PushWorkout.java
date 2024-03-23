@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +29,8 @@ public class PushWorkout extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference databaseUsers;
     TextView workoutType, exercise1, exercise2, exercise3;
-    int benchPB, inclinePB, tricepPB;
-    int benchPBRep, inclinePBRep, tricepPBRep;
+    int benchBestSetWeight, inclineBestSetWeight, tricepBestSetWeight;
+    int benchBestSetRep, inclineBestSetRep, tricepBestSetRep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +109,8 @@ public class PushWorkout extends AppCompatActivity {
                             Integer.parseInt(benchR3.getText().toString())
                     };
                     int maxWeightBenchPos = findMaxWeightPosition(new EditText[]{benchW1, benchW2, benchW3});
-                    benchPB = maxWeightBench;
-                    benchPBRep = benchReps[maxWeightBenchPos];
+                    benchBestSetWeight = maxWeightBench;
+                    benchBestSetRep = benchReps[maxWeightBenchPos];
 
                     int maxWeightIncline = findMaxWeight(new EditText[]{inclineW1, inclineW2, inclineW3});
                     int[] inclineReps = new int[]{
@@ -118,8 +119,8 @@ public class PushWorkout extends AppCompatActivity {
                             Integer.parseInt(inclineR3.getText().toString())
                     };
                     int maxWeightInclinePos = findMaxWeightPosition(new EditText[]{inclineW1, inclineW2, inclineW3});
-                    inclinePB = maxWeightIncline;
-                    inclinePBRep = inclineReps[maxWeightInclinePos];
+                    inclineBestSetWeight = maxWeightIncline;
+                    inclineBestSetRep = inclineReps[maxWeightInclinePos];
 
                     int maxWeightTricep = findMaxWeight(new EditText[]{tricepW1, tricepW2, tricepW3});
                     int[] tricepReps = new int[]{
@@ -128,17 +129,17 @@ public class PushWorkout extends AppCompatActivity {
                             Integer.parseInt(tricepR3.getText().toString())
                     };
                     int maxWeightTricepPos = findMaxWeightPosition(new EditText[]{tricepW1, tricepW2, tricepW3});
-                    tricepPB = maxWeightTricep;
-                    tricepPBRep = tricepReps[maxWeightTricepPos];
+                    tricepBestSetWeight = maxWeightTricep;
+                    tricepBestSetRep = tricepReps[maxWeightTricepPos];
                     //Toast.makeText(PushWorkout.this, "max bench"+benchPB, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(PushWorkout.this, "max bench reps"+benchPBRep, Toast.LENGTH_SHORT).show();
                     Toast.makeText(PushWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
-                    System.out.println("Bench best set weight = " + benchPB);
-                    System.out.println("Bench best set reps = " + benchPBRep);
-                    System.out.println("Incline best set weight = " + inclinePB);
-                    System.out.println("Incline best set reps = " + inclinePBRep);
-                    System.out.println("Tricep best set weight = " + tricepPB);
-                    System.out.println("Tricep best set reps = " + tricepPBRep);
+                    System.out.println("Bench best set weight = " + benchBestSetWeight);
+                    System.out.println("Bench best set reps = " + benchBestSetRep);
+                    System.out.println("Incline best set weight = " + inclineBestSetWeight);
+                    System.out.println("Incline best set reps = " + inclineBestSetRep);
+                    System.out.println("Tricep best set weight = " + tricepBestSetWeight);
+                    System.out.println("Tricep best set reps = " + tricepBestSetRep);
                     InsertData();
                 }
             }
@@ -201,9 +202,20 @@ public class PushWorkout extends AppCompatActivity {
             exercises.put(exercise3.getName(),exercise3);
 
             // Create a new Workout object with the list of exercises
+
             Workout workout = new Workout(workoutTypeText, exercises);
             // Push workout data to Firebase
-            databaseUsers.child("users").child(user.getUid()).child("workouts").push().setValue(workout);
+            DatabaseReference workoutReference = databaseUsers.child("users").child(user.getUid()).child("workouts").push();
+            workoutReference.setValue(workout);
+
+            ExerciseBestSet benchBestSet = new ExerciseBestSet(benchBestSetWeight,benchBestSetRep);
+            ExerciseBestSet inclineBestSet = new ExerciseBestSet(inclineBestSetWeight, inclineBestSetRep);
+            ExerciseBestSet tricepBestSet = new ExerciseBestSet(tricepBestSetWeight,tricepBestSetRep);
+
+            workoutReference.child("Best set Bench Press").setValue(benchBestSet);
+            workoutReference.child("Best set Incline Bench Press").setValue(inclineBestSet);
+            workoutReference.child("Best set Tricep Extension").setValue(tricepBestSet);
+
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

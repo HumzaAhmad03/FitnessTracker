@@ -24,7 +24,7 @@
             android:name=".PushWorkout"
             android:exported="false" />
         <activity
-            android:name=".Testing"
+            android:name=".UserPbs"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

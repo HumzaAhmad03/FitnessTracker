@@ -28,6 +28,8 @@ public class LegWorkout extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference databaseUsers;
     TextView workoutType, exercise1, exercise2, exercise3;
+    int squatBestSetWeight, extensionBestSetWeight, calfBestSetWeight;
+    int squatBestSetRep, extensionBestSetRep, calfBestSetRep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,44 @@ public class LegWorkout extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(LegWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
+                    int maxWeightSquat = findMaxWeight(new EditText[]{squatW1, squatW2, squatW3});
+                    int[] latReps = new int[]{
+                            Integer.parseInt(squatR1.getText().toString()),
+                            Integer.parseInt(squatR2.getText().toString()),
+                            Integer.parseInt(squatR3.getText().toString())
+                    };
+                    int maxWeightSquatPos = findMaxWeightPosition(new EditText[]{squatW1, squatW2, squatW3});
+                    squatBestSetWeight = maxWeightSquat;
+                    squatBestSetRep = latReps[maxWeightSquatPos];
+
+                    int maxWeightExtension = findMaxWeight(new EditText[]{extensionW1, extensionW2, extensionW3});
+                    int[] extensionReps = new int[]{
+                            Integer.parseInt(extensionR1.getText().toString()),
+                            Integer.parseInt(extensionR2.getText().toString()),
+                            Integer.parseInt(extensionR3.getText().toString())
+                    };
+                    int maxWeightExtensionPos = findMaxWeightPosition(new EditText[]{extensionW1, extensionW2, extensionW3});
+                    extensionBestSetWeight = maxWeightExtension;
+                    extensionBestSetRep = extensionReps[maxWeightExtensionPos];
+
+                    int maxWeightCalf = findMaxWeight(new EditText[]{calfW1, calfW2, calfW3});
+                    int[] calfReps = new int[]{
+                            Integer.parseInt(calfR1.getText().toString()),
+                            Integer.parseInt(calfR2.getText().toString()),
+                            Integer.parseInt(calfR3.getText().toString())
+                    };
+                    int maxWeightCalfPos = findMaxWeightPosition(new EditText[]{calfW1, calfW2, calfW3});
+                    calfBestSetWeight = maxWeightCalf;
+                    calfBestSetRep = calfReps[maxWeightCalfPos];
+                    //Toast.makeText(PushWorkout.this, "max bench"+benchPB, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PushWorkout.this, "max bench reps"+benchPBRep, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LegWorkout.this, "Saving workout...", Toast.LENGTH_SHORT).show();
+                    System.out.println("Bench best set weight = " + squatBestSetWeight);
+                    System.out.println("Bench best set reps = " + squatBestSetRep);
+                    System.out.println("Incline best set weight = " + extensionBestSetWeight);
+                    System.out.println("Incline best set reps = " + extensionBestSetRep);
+                    System.out.println("Tricep best set weight = " + calfBestSetWeight);
+                    System.out.println("Tricep best set reps = " + calfBestSetRep);
                     InsertData();
                 }
             }
@@ -161,7 +201,17 @@ public class LegWorkout extends AppCompatActivity {
             // Create a new Workout object with the list of exercises
             Workout workout = new Workout(workoutTypeText, exercises);
             // Push workout data to Firebase
-            databaseUsers.child("users").child(user.getUid()).child("workouts").push().setValue(workout);
+            //databaseUsers.child("users").child(user.getUid()).child("workouts").push().setValue(workout);
+            DatabaseReference workoutReference = databaseUsers.child("users").child(user.getUid()).child("workouts").push();
+            workoutReference.setValue(workout);
+
+            ExerciseBestSet squatBestSet = new ExerciseBestSet(squatBestSetWeight,squatBestSetRep);
+            ExerciseBestSet extensionBestSet = new ExerciseBestSet(extensionBestSetWeight, extensionBestSetRep);
+            ExerciseBestSet calfBestSet = new ExerciseBestSet(calfBestSetWeight,calfBestSetRep);
+
+            workoutReference.child("Best set Squats").setValue(squatBestSet);
+            workoutReference.child("Best set Leg Extension").setValue(extensionBestSet);
+            workoutReference.child("Best set Calf Raise").setValue(calfBestSet);
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -182,5 +232,27 @@ public class LegWorkout extends AppCompatActivity {
     }
     private boolean isEmpty(EditText field){
         return field.getText().toString().isEmpty();
+    }
+    private int findMaxWeight(EditText[] editTexts) {
+        int maxWeight = Integer.MIN_VALUE;
+        for (EditText editText : editTexts) {
+            int weight = Integer.parseInt(editText.getText().toString());
+            if (weight > maxWeight) {
+                maxWeight = weight;
+            }
+        }
+        return maxWeight;
+    }
+    private int findMaxWeightPosition(EditText[] editTexts) {
+        int maxWeight = Integer.MIN_VALUE;
+        int maxWeightPos = -1;
+        for (int i = 0; i < editTexts.length; i++) {
+            int weight = Integer.parseInt(editTexts[i].getText().toString());
+            if (weight > maxWeight) {
+                maxWeight = weight;
+                maxWeightPos = i;
+            }
+        }
+        return maxWeightPos;
     }
 }

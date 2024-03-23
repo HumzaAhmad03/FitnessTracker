@@ -21,6 +21,9 @@ public class Workout {
         this.workoutType = workoutType;
         exercises = new HashMap<>();
     }
+    public Workout() {
+        // Default constructor required for Firebase
+    }
 
     public String getWorkoutType() {
         return workoutType;
