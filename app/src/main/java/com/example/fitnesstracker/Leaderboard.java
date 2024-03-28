@@ -51,6 +51,8 @@ public class Leaderboard extends AppCompatActivity {
         tricep3rdemail = findViewById(R.id.tricep3rdemail);
         tricep3rdweight = findViewById(R.id.tricep3rdweight);
 
+        String kg = getString(R.string.leaderboard);
+
         // Get reference to users node in the database
         usersReference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -96,7 +98,8 @@ public class Leaderboard extends AppCompatActivity {
         if (!userDataList.isEmpty()) {
             UserData firstPlace = userDataList.get(0);
             bench1stemail.setText(firstPlace.getUserEmail());
-            bench1stweight.setText(String.valueOf(getExerciseWeight(firstPlace, "Bench Press")));
+            //bench1stweight.setText(String.valueOf(getExerciseWeight(firstPlace, "Bench Press")));
+            bench1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Bench Press")));
         } else {
             // If no users, display N/A
             bench1stemail.setText("N/A");
@@ -107,7 +110,8 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 2) {
             UserData secondPlace = userDataList.get(1);
             bench2ndemail.setText(secondPlace.getUserEmail());
-            bench2ndweight.setText(String.valueOf(getExerciseWeight(secondPlace, "Bench Press")));
+            //bench2ndweight.setText(String.valueOf(getExerciseWeight(secondPlace, "Bench Press")));
+            bench2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Bench Press")));
         } else {
             // If no second user, display N/A
             bench2ndemail.setText("N/A");
@@ -118,7 +122,8 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 3) {
             UserData thirdPlace = userDataList.get(2);
             bench3rdemail.setText(thirdPlace.getUserEmail());
-            bench3rdweight.setText(String.valueOf(getExerciseWeight(thirdPlace, "Bench Press")));
+            //bench3rdweight.setText(String.valueOf(getExerciseWeight(thirdPlace, "Bench Press")));
+            bench3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Bench Press")));
         } else {
             // If no third user, display N/A
             bench3rdemail.setText("N/A");
@@ -131,7 +136,7 @@ public class Leaderboard extends AppCompatActivity {
         if (!userDataList.isEmpty()) {
             UserData firstPlace = userDataList.get(0);
             incline1stemail.setText(firstPlace.getUserEmail());
-            incline1stweight.setText(String.valueOf(getExerciseWeight(firstPlace, "Incline Bench Press")));
+            incline1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Incline Bench Press")));
         } else {
             // If no users, display N/A
             incline1stemail.setText("N/A");
@@ -142,7 +147,7 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 2) {
             UserData secondPlace = userDataList.get(1);
             incline2ndemail.setText(secondPlace.getUserEmail());
-            incline2ndweight.setText(String.valueOf(getExerciseWeight(secondPlace, "Incline Bench Press")));
+            incline2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Incline Bench Press")));
         } else {
             // If no second user, display N/A
             incline2ndemail.setText("N/A");
@@ -153,7 +158,7 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 3) {
             UserData thirdPlace = userDataList.get(2);
             incline3rdemail.setText(thirdPlace.getUserEmail());
-            incline3rdweight.setText(String.valueOf(getExerciseWeight(thirdPlace, "Incline Bench Press")));
+            incline3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Incline Bench Press")));
         } else {
             // If no third user, display N/A
             incline3rdemail.setText("N/A");
@@ -166,7 +171,7 @@ public class Leaderboard extends AppCompatActivity {
         if (!userDataList.isEmpty()) {
             UserData firstPlace = userDataList.get(0);
             tricep1stemail.setText(firstPlace.getUserEmail());
-            tricep1stweight.setText(String.valueOf(getExerciseWeight(firstPlace, "Tricep Extension")));
+            tricep1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Tricep Extension")));
         } else {
             // If no users, display N/A
             tricep1stemail.setText("N/A");
@@ -177,7 +182,7 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 2) {
             UserData secondPlace = userDataList.get(1);
             tricep2ndemail.setText(secondPlace.getUserEmail());
-            tricep2ndweight.setText(String.valueOf(getExerciseWeight(secondPlace, "Tricep Extension")));
+            tricep2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Tricep Extension")));
         } else {
             // If no second user, display N/A
             tricep2ndemail.setText("N/A");
@@ -188,7 +193,7 @@ public class Leaderboard extends AppCompatActivity {
         if (userDataList.size() >= 3) {
             UserData thirdPlace = userDataList.get(2);
             tricep3rdemail.setText(thirdPlace.getUserEmail());
-            tricep3rdweight.setText(String.valueOf(getExerciseWeight(thirdPlace, "Tricep Extension")));
+            tricep3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Tricep Extension")));
         } else {
             // If no third user, display N/A
             tricep3rdemail.setText("N/A");

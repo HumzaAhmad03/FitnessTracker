@@ -39,4 +39,6 @@
     <string name="leg_extensions">Leg Extensions</string>
     <string name="calf_raises">Calf Raises</string>
     <string name="weight_and_reps_template">kg x </string>
+    <string name="leaderboard"> kg</string>
+
 </resources>
