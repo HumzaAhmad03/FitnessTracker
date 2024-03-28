@@ -27,6 +27,9 @@ public class Leaderboard extends AppCompatActivity {
     private TextView lat1stemail, lat1stweight, lat2ndemail, lat2ndweight, lat3rdemail, lat3rdweight;
     private TextView row1stemail, row1stweight, row2ndemail, row2ndweight, row3rdemail, row3rdweight;
     private TextView bicep1stemail, bicep1stweight, bicep2ndemail, bicep2ndweight, bicep3rdemail, bicep3rdweight;
+    private TextView squat1stemail, squat1stweight, squat2ndemail, squat2ndweight, squat3rdemail, squat3rdweight;
+    private TextView extension1stemail, extension1stweight, extension2ndemail, extension2ndweight, extension3rdemail, extension3rdweight;
+    private TextView calf1stemail, calf1stweight, calf2ndemail, calf2ndweight, calf3rdemail, calf3rdweight;
 
     @Override
     public void onBackPressed() {
@@ -85,6 +88,30 @@ public class Leaderboard extends AppCompatActivity {
         bicep3rdemail = findViewById(R.id.bicep3rdemail);
         bicep3rdweight = findViewById(R.id.bicep3rdweight);
 
+        // Initialize TextViews for squat
+        squat1stemail = findViewById(R.id.squat1stemail);
+        squat1stweight = findViewById(R.id.squat1stweight);
+        squat2ndemail = findViewById(R.id.squat2ndemail);
+        squat2ndweight = findViewById(R.id.squat2ndweight);
+        squat3rdemail = findViewById(R.id.squat3rdemail);
+        squat3rdweight = findViewById(R.id.squat3rdweight);
+
+        // Initialize TextViews for leg extension
+        extension1stemail = findViewById(R.id.extension1stemail);
+        extension1stweight = findViewById(R.id.extension1stweight);
+        extension2ndemail = findViewById(R.id.extension2ndemail);
+        extension2ndweight = findViewById(R.id.extension2ndweight);
+        extension3rdemail = findViewById(R.id.extension3rdemail);
+        extension3rdweight = findViewById(R.id.extension3rdweight);
+
+        // Initialize TextViews for calf exercise
+        calf1stemail = findViewById(R.id.calf1stemail);
+        calf1stweight = findViewById(R.id.calf1stweight);
+        calf2ndemail = findViewById(R.id.calf2ndemail);
+        calf2ndweight = findViewById(R.id.calf2ndweight);
+        calf3rdemail = findViewById(R.id.calf3rdemail);
+        calf3rdweight = findViewById(R.id.calf3rdweight);
+
         String kg = getString(R.string.leaderboard);
 
         // Get reference to users node in the database
@@ -100,6 +127,9 @@ public class Leaderboard extends AppCompatActivity {
                 List<UserData> latPullDownList = new ArrayList<>();
                 List<UserData> rowList = new ArrayList<>();
                 List<UserData> bicepCurlList = new ArrayList<>();
+                List<UserData> squatsList = new ArrayList<>();
+                List<UserData> legExtensionList = new ArrayList<>();
+                List<UserData> calfRaiseList = new ArrayList<>();
 
                 // Iterate through each user
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
@@ -112,6 +142,9 @@ public class Leaderboard extends AppCompatActivity {
                         latPullDownList.add(userData);
                         rowList.add(userData);
                         bicepCurlList.add(userData);
+                        squatsList.add(userData);
+                        legExtensionList.add(userData);
+                        calfRaiseList.add(userData);
                     }
                 }
 
@@ -176,6 +209,36 @@ public class Leaderboard extends AppCompatActivity {
                         return compareExerciseData(bicepCurl1, bicepCurl2);
                     }
                 });
+                // Comparator for Squats
+                Collections.sort(squatsList, new Comparator<UserData>() {
+                    @Override
+                    public int compare(UserData user1, UserData user2) {
+                        ExerciseData squats1 = user1.getPersonal_bests().get("Squats");
+                        ExerciseData squats2 = user2.getPersonal_bests().get("Squats");
+                        return compareExerciseData(squats1, squats2);
+                    }
+                });
+
+                // Comparator for Leg Extension
+                Collections.sort(legExtensionList, new Comparator<UserData>() {
+                    @Override
+                    public int compare(UserData user1, UserData user2) {
+                        ExerciseData legExtension1 = user1.getPersonal_bests().get("Leg Extensions");
+                        ExerciseData legExtension2 = user2.getPersonal_bests().get("Leg Extensions");
+                        return compareExerciseData(legExtension1, legExtension2);
+                    }
+                });
+
+                // Comparator for Calf Raise
+                Collections.sort(calfRaiseList, new Comparator<UserData>() {
+                    @Override
+                    public int compare(UserData user1, UserData user2) {
+                        ExerciseData calfRaise1 = user1.getPersonal_bests().get("Calf Raises");
+                        ExerciseData calfRaise2 = user2.getPersonal_bests().get("Calf Raises");
+                        return compareExerciseData(calfRaise1, calfRaise2);
+                    }
+                });
+
 
                 // Update TextViews with sorted data for each exercise type
                 updateLeaderboardUI(benchPressList);
@@ -184,6 +247,9 @@ public class Leaderboard extends AppCompatActivity {
                 updateLatLeaderboardUI(latPullDownList);
                 updateRowLeaderboardUI(rowList);
                 updateBicepLeaderboardUI(bicepCurlList);
+                updateSquatLeaderboardUI(squatsList);
+                updateExtensionLeaderboardUI(legExtensionList);
+                updateCalfLeaderboardUI(calfRaiseList);
             }
             private int compareExerciseData(ExerciseData data1, ExerciseData data2) {
                 if (data1 != null && data2 != null) {
@@ -410,6 +476,108 @@ public class Leaderboard extends AppCompatActivity {
             // If no third user, display N/A
             bicep3rdemail.setText("N/A");
             bicep3rdweight.setText("N/A");
+        }
+    }
+    private void updateSquatLeaderboardUI(List<UserData> userDataList) {
+        // Update 1st place if available for squats
+        if (!userDataList.isEmpty()) {
+            UserData firstPlace = userDataList.get(0);
+            squat1stemail.setText(firstPlace.getUserEmail());
+            squat1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Squats")));
+        } else {
+            // If no users, display N/A
+            squat1stemail.setText("N/A");
+            squat1stweight.setText("N/A");
+        }
+
+        // Update 2nd place if available for squats
+        if (userDataList.size() >= 2) {
+            UserData secondPlace = userDataList.get(1);
+            squat2ndemail.setText(secondPlace.getUserEmail());
+            squat2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Squats")));
+        } else {
+            // If no second user, display N/A
+            squat2ndemail.setText("N/A");
+            squat2ndweight.setText("N/A");
+        }
+
+        // Update 3rd place if available for squats
+        if (userDataList.size() >= 3) {
+            UserData thirdPlace = userDataList.get(2);
+            squat3rdemail.setText(thirdPlace.getUserEmail());
+            squat3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Squats")));
+        } else {
+            // If no third user, display N/A
+            squat3rdemail.setText("N/A");
+            squat3rdweight.setText("N/A");
+        }
+    }
+    private void updateExtensionLeaderboardUI(List<UserData> userDataList) {
+        // Update 1st place if available for leg extensions
+        if (!userDataList.isEmpty()) {
+            UserData firstPlace = userDataList.get(0);
+            extension1stemail.setText(firstPlace.getUserEmail());
+            extension1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Leg Extensions")));
+        } else {
+            // If no users, display N/A
+            extension1stemail.setText("N/A");
+            extension1stweight.setText("N/A");
+        }
+
+        // Update 2nd place if available for leg extensions
+        if (userDataList.size() >= 2) {
+            UserData secondPlace = userDataList.get(1);
+            extension2ndemail.setText(secondPlace.getUserEmail());
+            extension2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Leg Extensions")));
+        } else {
+            // If no second user, display N/A
+            extension2ndemail.setText("N/A");
+            extension2ndweight.setText("N/A");
+        }
+
+        // Update 3rd place if available for leg extensions
+        if (userDataList.size() >= 3) {
+            UserData thirdPlace = userDataList.get(2);
+            extension3rdemail.setText(thirdPlace.getUserEmail());
+            extension3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Leg Extensions")));
+        } else {
+            // If no third user, display N/A
+            extension3rdemail.setText("N/A");
+            extension3rdweight.setText("N/A");
+        }
+    }
+    private void updateCalfLeaderboardUI(List<UserData> userDataList) {
+        // Update 1st place if available for calf raises
+        if (!userDataList.isEmpty()) {
+            UserData firstPlace = userDataList.get(0);
+            calf1stemail.setText(firstPlace.getUserEmail());
+            calf1stweight.setText(String.format("%s kg", getExerciseWeight(firstPlace, "Calf Raises")));
+        } else {
+            // If no users, display N/A
+            calf1stemail.setText("N/A");
+            calf1stweight.setText("N/A");
+        }
+
+        // Update 2nd place if available for calf raises
+        if (userDataList.size() >= 2) {
+            UserData secondPlace = userDataList.get(1);
+            calf2ndemail.setText(secondPlace.getUserEmail());
+            calf2ndweight.setText(String.format("%s kg", getExerciseWeight(secondPlace, "Calf Raises")));
+        } else {
+            // If no second user, display N/A
+            calf2ndemail.setText("N/A");
+            calf2ndweight.setText("N/A");
+        }
+
+        // Update 3rd place if available for calf raises
+        if (userDataList.size() >= 3) {
+            UserData thirdPlace = userDataList.get(2);
+            calf3rdemail.setText(thirdPlace.getUserEmail());
+            calf3rdweight.setText(String.format("%s kg", getExerciseWeight(thirdPlace, "Calf Raises")));
+        } else {
+            // If no third user, display N/A
+            calf3rdemail.setText("N/A");
+            calf3rdweight.setText("N/A");
         }
     }
 
