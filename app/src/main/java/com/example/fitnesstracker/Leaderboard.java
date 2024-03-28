@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,8 @@ public class Leaderboard extends AppCompatActivity {
     private TextView squat1stemail, squat1stweight, squat2ndemail, squat2ndweight, squat3rdemail, squat3rdweight;
     private TextView extension1stemail, extension1stweight, extension2ndemail, extension2ndweight, extension3rdemail, extension3rdweight;
     private TextView calf1stemail, calf1stweight, calf2ndemail, calf2ndweight, calf3rdemail, calf3rdweight;
+
+    Button home;
 
     @Override
     public void onBackPressed() {
@@ -112,10 +116,20 @@ public class Leaderboard extends AppCompatActivity {
         calf3rdemail = findViewById(R.id.calf3rdemail);
         calf3rdweight = findViewById(R.id.calf3rdweight);
 
+        home = findViewById(R.id.home_btn);
+
         String kg = getString(R.string.leaderboard);
 
         // Get reference to users node in the database
         usersReference = FirebaseDatabase.getInstance().getReference("users");
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Retrieve data for all users
         usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
