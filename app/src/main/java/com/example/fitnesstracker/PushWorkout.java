@@ -218,7 +218,7 @@ public class PushWorkout extends AppCompatActivity {
 
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UserPbs.class);
             startActivity(intent);
             finish();
         } catch (Exception e) {

@@ -215,7 +215,7 @@ public class PullWorkout extends AppCompatActivity {
             workoutReference.child("Best set Bicep Curl").setValue(bicepBestSet);
 
             Toast.makeText(this, "Workout saved successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UserPbs.class);
             startActivity(intent);
             finish();
         } catch (Exception e) {
