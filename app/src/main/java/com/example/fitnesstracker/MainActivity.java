@@ -54,6 +54,88 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
 
+        if (user == null){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            textView.setText(user.getEmail());
+
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+            userRef.child("userEmail").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        // If "userEmail" node doesn't exist, push the email to the database
+                        userRef.child("userEmail").setValue(user.getEmail());
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle database error
+                }
+            });
+
+//            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+//            userRef.child("userEmail").setValue(user.getEmail());
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PushWorkout.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        pull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PullWorkout.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        legs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LegWorkout.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UserPbs.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Leaderboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+   }
+}
+
 //        recyclerView = findViewById(R.id.workoutHistory);
 //        workoutMap = new HashMap<>();
 //        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("workouts");
@@ -154,85 +236,3 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-
-        if (user == null){
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else {
-            textView.setText(user.getEmail());
-
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
-            userRef.child("userEmail").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.exists()) {
-                        // If "userEmail" node doesn't exist, push the email to the database
-                        userRef.child("userEmail").setValue(user.getEmail());
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Handle database error
-                }
-            });
-
-//            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
-//            userRef.child("userEmail").setValue(user.getEmail());
-        }
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        push.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PushWorkout.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        pull.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PullWorkout.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        legs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LegWorkout.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserPbs.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Leaderboard.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-   }
-}

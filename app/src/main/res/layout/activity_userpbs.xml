@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserPbs"
-    android:layout_margin="20dp">
+    android:layout_margin="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -310,7 +310,20 @@
                 android:textSize="20sp">
             </TextView>
         </LinearLayout>
+        <Button
+            android:id="@+id/home_btn"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="@string/home"
+            android:textColor="@color/primary"
+            android:background="@drawable/input_field_border"
+            app:backgroundTint="@null"
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"/>
     </LinearLayout>
+
 
 
 

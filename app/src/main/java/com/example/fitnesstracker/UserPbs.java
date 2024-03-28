@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +27,7 @@ public class UserPbs extends AppCompatActivity {
     TextView latPbReps,rowPbReps,bicepPbReps;
     TextView squatPb,extensionPb,calfPb;
     TextView squatPbReps,extensionPbReps,calfPbReps;
+    Button home;
     DatabaseReference databaseReference;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -63,9 +66,19 @@ public class UserPbs extends AppCompatActivity {
         extensionPbReps = findViewById(R.id.textextensionpbreps);
         calfPbReps = findViewById(R.id.textcalfpbreps);
 
+        home = findViewById(R.id.home_btn);
+
         user = auth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("workouts");
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,6 +129,7 @@ public class UserPbs extends AppCompatActivity {
             }
         });
     }
+
     private void updateEditTextFields(HashMap<String, Integer> personalBests, HashMap<String, Integer> personalBestReps) {
         if (personalBests.containsKey("Bench Press")) {
             String weightTemplate = getString(R.string.weight_and_reps_template);
