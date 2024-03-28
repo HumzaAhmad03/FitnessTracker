@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +7,6 @@
     tools:context=".Leaderboard"
     android:layout_margin="12dp">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,18 +130,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/incline1st"
+                        android:id="@+id/incline1stemail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/calf_raises"
                         android:textColor="@color/first"
                         android:textSize="20sp"
-                        android:text="@string/calf_raises"
-                        android:layout_marginEnd="15dp"
                         android:textStyle="bold">
+
                     </TextView>
+
                     <TextView
-                        android:id="@+id/incline1streps"
+                        android:id="@+id/incline1stweight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/first"
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/incline2nd"
+                        android:id="@+id/incline2ndemail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/second"
@@ -168,7 +168,7 @@
                         android:textStyle="bold">
                     </TextView>
                     <TextView
-                        android:id="@+id/incline2ndreps"
+                        android:id="@+id/incline2ndweight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/second"
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/incline3rd"
+                        android:id="@+id/incline3rdemail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/third"
@@ -192,7 +192,7 @@
                         android:textStyle="bold">
                     </TextView>
                     <TextView
-                        android:id="@+id/incline3rdreps"
+                        android:id="@+id/incline3rdweight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/third"
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/tricep1st"
+                            android:id="@+id/tricep1stemail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/first"
@@ -233,7 +233,7 @@
                             android:textStyle="bold">
                         </TextView>
                         <TextView
-                            android:id="@+id/tricep1streps"
+                            android:id="@+id/tricep1stweight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/first"
@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/tricep2nd"
+                            android:id="@+id/tricep2ndemail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/second"
@@ -257,7 +257,7 @@
                             android:textStyle="bold">
                         </TextView>
                         <TextView
-                            android:id="@+id/tricep2ndreps"
+                            android:id="@+id/tricep2ndweight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/second"
@@ -271,7 +271,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/tricep3rd"
+                            android:id="@+id/tricep3rdemail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/third"
@@ -281,7 +281,7 @@
                             android:textStyle="bold">
                         </TextView>
                         <TextView
-                            android:id="@+id/tricep3rdreps"
+                            android:id="@+id/tricep3rdweight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/third"
@@ -293,7 +293,5 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
-
-</RelativeLayout>
+</ScrollView>
