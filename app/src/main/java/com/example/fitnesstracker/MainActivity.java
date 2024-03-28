@@ -13,6 +13,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 //import com.google.firebase.database.DataSnapshot;
 //import com.google.firebase.database.DatabaseError;
 //import com.google.firebase.database.DatabaseReference;
@@ -24,7 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button,push,pull,legs, test;
+    Button button,push,pull,legs, test, leaderboard;
     TextView textView;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         pull = findViewById(R.id.pull_workout_type_btn);
         legs = findViewById(R.id.leg_workout_type_btn);
         test = findViewById(R.id.testing_btn);
+        leaderboard = findViewById(R.id.leaderboard_btn);
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
 
@@ -156,6 +162,25 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             textView.setText(user.getEmail());
+
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+            userRef.child("userEmail").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        // If "userEmail" node doesn't exist, push the email to the database
+                        userRef.child("userEmail").setValue(user.getEmail());
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle database error
+                }
+            });
+
+//            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+//            userRef.child("userEmail").setValue(user.getEmail());
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +222,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserPbs.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Leaderboard.class);
                 startActivity(intent);
                 finish();
             }
